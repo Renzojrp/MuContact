@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pe.com.mucontact">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:name=".MuContactApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/mc_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.RegisterActivity"
+            android:label="@string/title_activity_register"
+            android:parentActivityName=".activities.LoginActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.LoginActivity" />
+        </activity>
+        <activity
+            android:name=".activities.HomeActivity"
+            android:label="@string/title_activity_home" />
+        <activity
+            android:name=".activities.AddPublicationActivity"
+            android:label="@string/title_activity_add_publication"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.AboutUserActivity"
+            android:label="@string/title_activity_about_user"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.EditUserProfileActivity"
+            android:label="@string/title_activity_edit_user"
+            android:parentActivityName=".activities.AboutUserActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.AboutUserActivity" />
+        </activity>
+        <activity
+            android:name=".activities.RewardActivity"
+            android:label="@string/title_activity_reward"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".activities.AboutRewardActivity"
+            android:label="@string/title_activity_about_reward"
+            android:parentActivityName=".activities.RewardActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.RewardActivity" />
+        </activity>
+        <activity
+            android:name=".activities.AboutCraftmanActivity"
+            android:label="@string/title_activity_about_craftman"
+            android:parentActivityName=".activities.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="pe.com.mucontact.activities.HomeActivity" />
+        </activity>
+    </application>
+
+</manifest>

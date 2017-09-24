@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MuContact</string>
+
+    <string name="loginButton">Iniciar sesión</string>
+    <string name="signUpTextView"><u>¿Sin cuenta aún? Crear una</u></string>
+    <string name="signInTextView"><u>¿Ya eres un miembro? Inicia sesión</u></string>
+    <string name="email_hint">Correo</string>
+    <string name="password_hint">Contraseña</string>
+
+    <string name="error_message_login">Necesitas una cuenta de músico</string>
+    <string name="invalid_email">Correo no válido</string>
+    <string name="invalid_password">Contraseña no válida</string>
+    <string name="incorrect_login">Usuario o contraseña incorrecto</string>
+    <string name="title_activity_register">Registar nueva cuenta</string>
+    <string name="first_name_hint">Nombre y Apellido</string>
+    <string name="signUpButton">Crear cuenta</string>
+    <string name="user_saved">Usuario registrado</string>
+    <string name="error_user_saved">Error al resgistrar usuario</string>
+    <string name="invalid_displayName">Nombre no válido</string>
+    <string name="title_activity_home">Inicio</string>
+    <string name="title_contracts">Contratos</string>
+    <string name="title_craftmen">Artesanos</string>
+    <string name="title_publications">Publicaciones</string>
+    <string name="action_profile">Perfil</string>
+    <string name="title_rewards">Recompensas</string>
+    <string name="title_activity_add_publication">Crear publicación</string>
+    <string name="error_publication_save">Error al guardar la publicación</string>
+    <string name="publication_save">Publicación guardada</string>
+    <string name="locationReference">Ubicación</string>
+    <string name="locationReference_hint">Ubicación</string>
+    <string name="instrument_hint">Instrumento</string>
+    <string name="description">Descripción</string>
+    <string name="description_hint">Descripción</string>
+    <string name="error_profile_musician">Error en el perfil de músico</string>
+    <string name="error_publication_delete">Error al eliminar la publicación</string>
+    <string name="publication_delete">Publicación eliminada</string>
+    <string name="instrument">Instrumento</string>
+    <string name="action_delete">Eliminar</string>
+    <string name="action_edit">Editar</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="title_activity_about_user">Perfil</string>
+    <string name="title_activity_edit_user">Editar Usuario</string>
+    <string name="error_profile_update">Falló la actualización de perfil</string>
+    <string name="profile_update">¡Perfil actualizado!</string>
+    <string name="updateUserButton">¡Actualizar mi perfil!</string>
+    <string name="empty_fild">Complete los campos vacios</string>
+    <string name="title_activity_reward">Recompensas</string>
+    <string name="title_activity_about_reward">Descripción de Recompensa</string>
+    <string name="sendOrderButton">Enviar pedido</string>
+    <string name="title_activity_about_craftman">Datos de Artesano</string>
+    <string name="delivery_day">Día de entrega</string>
+</resources>

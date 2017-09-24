@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">MuContact</string>
+
+    <string name="loginButton">Login</string>
+    <string name="signUpTextView"><u>No account yet? Create one</u></string>
+    <string name="signInTextView"><u>Already a member? Login</u></string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+
+    <string name="error_message_login">You need a musician account</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="invalid_password">Invalid password</string>
+    <string name="incorrect_login">User or password incorrect</string>
+    <string name="title_activity_register">Register New Account</string>
+    <string name="first_name_hint">First name</string>
+    <string name="signUpButton">Create account</string>
+    <string name="error_user_saved">Failed to save user</string>
+    <string name="user_saved">User saved</string>
+    <string name="invalid_displayName">Invalid first name</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_contracts">Contracts</string>
+    <string name="title_craftmen">Craftmen</string>
+    <string name="title_publications">Publications</string>
+    <string name="action_profile">Profile</string>
+    <string name="title_rewards">Rewars</string>
+    <string name="title_activity_add_publication">Add Publication</string>
+    <string name="error_publication_save">Failed to save publication</string>
+    <string name="publication_save">Publication save</string>
+    <string name="locationReference">Location</string>
+    <string name="locationReference_hint">Location</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Description</string>
+    <string name="error_profile_musician">Error in musician profile</string>
+    <string name="error_publication_delete">Failed to delete publication</string>
+    <string name="publication_delete">Publication delete</string>
+    <string name="instrument">Instrument</string>
+    <string name="instrument_hint">Instrument</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_about_user">Profile</string>
+    <string name="title_activity_edit_user">Edit User</string>
+    <string name="error_profile_update">Failed to update profile</string>
+    <string name="profile_update">Profile updated!</string>
+    <string name="updateUserButton">Update my Info!</string>
+    <string name="empty_fild">Fill empty field</string>
+    <string name="title_activity_reward">Reward</string>
+    <string name="title_activity_about_reward">About Reward</string>
+    <string name="sendOrderButton">Send Order</string>
+    <string name="title_activity_about_craftman">About Craftman</string>
+    <string name="delivery_day">Delivery day</string>
+</resources>
