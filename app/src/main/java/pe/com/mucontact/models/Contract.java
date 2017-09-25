@@ -89,9 +89,9 @@ public class Contract {
         if(jsonContract == null) return null;
         Contract contract = new Contract();
         try {
-            contract.setUser(user.build(jsonContract.getJSONObject("user")));
-            contract.setCraftman(craftman.build(jsonContract.getJSONObject("craftman") , contract.getUser()));
-            contract.setPublication(publication.build(jsonContract.getJSONObject("publication") , user.build(jsonContract.getJSONObject("user"))));
+            contract.setUser(User.build(jsonContract.getJSONObject("user")));
+            contract.setCraftman(Craftman.build(jsonContract.getJSONObject("craftman") , contract.getUser()));
+            contract.setPublication(Publication.build(jsonContract.getJSONObject("publication") , User.build(jsonContract.getJSONObject("user"))));
             return contract;
         } catch (JSONException e) {
             e.printStackTrace();

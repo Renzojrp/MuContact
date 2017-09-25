@@ -52,6 +52,9 @@
     <string name="sample_date" translatable="false">Sample Date</string>
     <string name="sample_level" translatable="false">Sample level</string>
     <string name="sample_description" translatable="false">Sample description</string>
+    <string name="sample_category" translatable="false">Sample category</string>
+    <string name="sample_title" translatable="false">Sample title</string>
+    <string name="exchange">Exchange</string>
     <string name="title_activity_edit_user">Edit User</string>
 
     <string name="profile_update">Profile updated!</string>

@@ -1,11 +1,9 @@
 package pe.com.mucontact.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -33,19 +31,18 @@ public class EditUserProfileActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_user_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         displayNameEditText = (EditText) findViewById(R.id.displayNameInputEditText);
         emailEditText = (EditText) findViewById(R.id.emailInputEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordInputEditText);
-        Button updateInfoButton = (Button) findViewById(R.id.updateInfoButton);
 
         user = MuContactApp.getInstance().getCurrentUser();
 
-        displayNameEditText.setText(user.getDisplayName().toString());
-        emailEditText.setText(user.getEmail().toString());
+        displayNameEditText.setText(user.getDisplayName());
+        emailEditText.setText(user.getEmail());
         passwordEditText.setText(user.getPassword());
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
     private void editProfile() {
         AndroidNetworking.put(MuContactApiService.USERS_EDIT_URL)
                 .addBodyParameter("email", emailEditText.getText().toString())

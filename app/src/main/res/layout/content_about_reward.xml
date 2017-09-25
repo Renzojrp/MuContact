@@ -22,32 +22,32 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/pictureANImageView"
+        app:layout_constraintTop_toBottomOf="@id/pictureANImageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="8dp"
-        android:text="Sample Title"
+        android:text="@string/sample_title"
         android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/valueTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView"
+        app:layout_constraintTop_toBottomOf="@id/titleTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="8dp"
-        android:text="Sample Category"/>
+        android:text="@string/sample_category"/>
 
     <TextView
         android:id="@+id/descriptionTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/valueTextView"
+        app:layout_constraintTop_toBottomOf="@id/valueTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="8dp"
-        android:text="Sample Description"/>
+        android:text="@string/sample_description"/>
 
     <Button
         android:id="@+id/loginButton"
@@ -55,9 +55,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="Canjear"
+        app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+        android:text="@string/exchange"
         style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/descriptionTextView"/>
+        android:layout_marginTop="8dp"/>
 
 </android.support.constraint.ConstraintLayout>

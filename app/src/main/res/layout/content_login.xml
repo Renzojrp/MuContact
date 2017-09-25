@@ -24,7 +24,7 @@
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logoImageView"/>
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"/>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/emailTextInputLayout"
@@ -33,7 +33,7 @@
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTextView">
+        app:layout_constraintTop_toBottomOf="@id/titleTextView">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/emailTextInputEditText"
             android:layout_width="match_parent"
@@ -49,7 +49,7 @@
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/emailTextInputLayout">
+        app:layout_constraintTop_toBottomOf="@id/emailTextInputLayout">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/passwordInputEditText"
             android:layout_width="match_parent"
@@ -67,7 +67,7 @@
         android:layout_margin="16dp"
         android:text="@string/loginButton"
         style="@style/Base.Widget.AppCompat.Button.Colored"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextInputLayout"
+        app:layout_constraintTop_toBottomOf="@id/passwordTextInputLayout"
         android:onClick="loginClick"/>
 
     <TextView
@@ -78,14 +78,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:text="@string/signUpTextView"
         android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/loginButton"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
         android:onClick="goToRegisterActivity"/>
 
     <ProgressBar
         android:id="@+id/loginProgressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/signUpTextView"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

@@ -8,7 +8,6 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -110,8 +109,6 @@ public class AddPublicationActivity extends AppCompatActivity {
         if (requestCode == REQUEST_PERMISSION_CAMARA) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 startActivityForResult(cameraIntent, 1);
-            } else {
-
             }
         }
     }
@@ -132,9 +129,7 @@ public class AddPublicationActivity extends AppCompatActivity {
     }
 
     public void layoutByOrigin() {
-        if(MuContactApp.getInstance().getCurrentPublication() == null) {
-
-        } else {
+        if(MuContactApp.getInstance().getCurrentPublication() != null) {
             instrumentEditText.setText(MuContactApp.getInstance().getCurrentPublication().getInstrument());
             descriptionEditText.setText(MuContactApp.getInstance().getCurrentPublication().getDescription());
             locationAtEditText.setText(MuContactApp.getInstance().getCurrentPublication().getLocationReference());
@@ -171,7 +166,7 @@ public class AddPublicationActivity extends AppCompatActivity {
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                dateEditText.setText(dayOfMonth + "/" + month + "/" + year);
+                dateEditText.setText(dayOfMonth + "/" + (month+1) + "/" + year);
             }
         }, year, month, day);
         datePickerDialog.show();

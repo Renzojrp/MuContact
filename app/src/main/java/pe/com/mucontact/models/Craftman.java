@@ -84,7 +84,7 @@ public class Craftman{
                         .setLevel(jsonCraftman.getString("level"))
                         .setPhone(jsonCraftman.getString("phone"))
                         .setDescription(jsonCraftman.getString("description"))
-                        .setUser(user.build(jsonCraftman.getJSONObject("user")));
+                        .setUser(User.build(jsonCraftman.getJSONObject("user")));
             } else {
                 craftman.set_id(jsonCraftman.getString("_id"))
                         .setLevel(jsonCraftman.getString("level"))
@@ -92,7 +92,6 @@ public class Craftman{
                         .setDescription(jsonCraftman.getString("description"))
                         .setUser(user);
             }
-
             return craftman;
         } catch (JSONException e) {
             e.printStackTrace();

@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     public void loginClick(View v) {
         loginProgressBar.setVisibility(View.VISIBLE);
         intent = new Intent (v.getContext(), HomeActivity.class);
-        if(Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()==false){
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()){
             emailEditText.setError(getResources().getString(R.string.invalid_email));
             correctEmail = false;
             loginProgressBar.setVisibility(View.INVISIBLE);
@@ -74,7 +74,7 @@ public class LoginActivity extends AppCompatActivity {
             passwordEditText.setError(null);
             correctPassword = true;
         }
-        if(correctEmail == true && correctPassword == true) {
+        if(correctEmail && correctPassword) {
             login();
         }
     }

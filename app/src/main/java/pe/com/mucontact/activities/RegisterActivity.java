@@ -51,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void registerClick(View v) {
         loginProgressBar.setVisibility(View.VISIBLE);
-        if(Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()==false){
+        if(!Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()){
             emailEditText.setError(getResources().getString(R.string.invalid_email));
             correctEmail = false;
             loginProgressBar.setVisibility(View.INVISIBLE);
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
             passwordEditText.setError(null);
             correctPassword = true;
         }
-        if(correctEmail == true && correctPassword == true && correctDisplayName == true) {
+        if(correctEmail && correctPassword && correctDisplayName) {
             registerUser();
         }
     }
