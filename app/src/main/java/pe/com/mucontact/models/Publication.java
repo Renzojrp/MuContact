@@ -1,7 +1,5 @@
 package pe.com.mucontact.models;
 
-import com.orm.SugarRecord;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,45 +8,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by romer on 26/6/2017.
+ * Created by romer on 8/10/2017.
  */
 
-public class Publication extends SugarRecord{
-    private String _id;
-    private String instrument;
+public class Publication {
+    private String id;
+    private Instrument instrument;
     private String description;
-    private String locationReference;
-    private String createdAt;
-    private String craftmen;
-    private User user;
+    private String date;
+    private String locationAt;
+    private String status;
+    private String deliveryDay;
 
     public Publication() {
     }
 
-    public Publication(String _id, String instrument, String description, String locationReference, String createdAt, String craftmen, User user) {
-        this._id = _id;
-        this.instrument = instrument;
-        this.description = description;
-        this.locationReference = locationReference;
-        this.createdAt = createdAt;
-        this.craftmen = craftmen;
-        this.user = user;
+    public Publication(String id, Instrument instrument, String description, String date, String locationAt, String status, String deliveryDay) {
+        this.setId(id);
+        this.setInstrument(instrument);
+        this.setDescription(description);
+        this.setDate(date);
+        this.setLocationAt(locationAt);
+        this.setStatus(status);
+        this.setDeliveryDay(deliveryDay);
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public Publication set_id(String _id) {
-        this._id = _id;
+    public Publication setId(String id) {
+        this.id = id;
         return this;
     }
 
-    public String getInstrument() {
+    public Instrument getInstrument() {
         return instrument;
     }
 
-    public Publication setInstrument(String instrument) {
+    public Publication setInstrument(Instrument instrument) {
         this.instrument = instrument;
         return this;
     }
@@ -62,49 +60,69 @@ public class Publication extends SugarRecord{
         return this;
     }
 
-    public String getLocationReference() {
-        return locationReference;
+    public String getDate() {
+        return date;
     }
 
-    public Publication setLocationReference(String locationReference) {
-        this.locationReference = locationReference;
+    public Publication setDate(String date) {
+        this.date = date;
         return this;
     }
 
-    public String getCreatedAt() {
-        return createdAt;
+    public String getLocationAt() {
+        return locationAt;
     }
 
-    public Publication setCreatedAt(String createdAt) {
-        this.createdAt = createdAt;
+    public Publication setLocationAt(String locationAt) {
+        this.locationAt = locationAt;
         return this;
     }
 
-    public String getCraftmen() {
-        return craftmen;
+    public String getStatus() {
+        return status;
     }
 
-    public Publication setCraftmen(String craftmen) {
-        this.craftmen = craftmen;
+    public Publication setStatus(String status) {
+        this.status = status;
         return this;
     }
 
-    public String getContext() {
-        return "On " + getCreatedAt().substring(0,10) +
-                (getLocationReference().isEmpty() ? "" :
-                        " at " + getLocationReference());
+    public String getDeliveryDay() {
+        return deliveryDay;
     }
 
-    public static Publication build(JSONObject jsonPublication, User user) {
+    public Publication setDeliveryDay(String deliveryDay) {
+        this.deliveryDay = deliveryDay;
+        return this;
+    }
+
+    public String getDeliveryDayFormat() {
+        return "For " + getDeliveryDay() +
+                (getLocationAt().isEmpty() ? "" :
+                        " at " + getLocationAt());
+    }
+
+    public static Publication build(JSONObject jsonPublication, Instrument instrument, Musician musician) {
         if(jsonPublication == null) return null;
         Publication publication = new Publication();
         try {
-            publication.set_id(jsonPublication.getString("_id"))
-                    .setInstrument(jsonPublication.getString("instrument"))
-                    .setDescription(jsonPublication.getString("description"))
-                    .setCreatedAt(jsonPublication.getString("date"))
-                    .setLocationReference(jsonPublication.getString("locationAt"))
-                    .setUser(user);
+            if( instrument == null){
+                publication.setId(jsonPublication.getString("_id"))
+                        .setInstrument(Instrument.build(jsonPublication.getJSONObject("instrument"), musician))
+                        .setDescription(jsonPublication.getString("description"))
+                        .setDate(jsonPublication.getString("date"))
+                        .setLocationAt(jsonPublication.getString("locationAt"))
+                        .setStatus(jsonPublication.getString("status"))
+                        .setDeliveryDay(jsonPublication.getString("deliveryDay"));
+            } else {
+                publication.setId(jsonPublication.getString("_id"))
+                        .setInstrument(instrument)
+                        .setDescription(jsonPublication.getString("description"))
+                        .setDate(jsonPublication.getString("date"))
+                        .setLocationAt(jsonPublication.getString("locationAt"))
+                        .setStatus(jsonPublication.getString("status"))
+                        .setDeliveryDay(jsonPublication.getString("deliveryDay"));
+            }
             return publication;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -112,24 +130,17 @@ public class Publication extends SugarRecord{
         return null;
     }
 
-    public static List<Publication> build(JSONArray jsonPublications, User user) {
+    public static List<Publication> build(JSONArray jsonPublications, Instrument instrument, Musician musician) {
         if(jsonPublications == null) return null;
         int length = jsonPublications.length();
         List<Publication> publications = new ArrayList<>();
         for(int i = 0; i < length; i++)
             try {
-                publications.add(Publication.build(jsonPublications.getJSONObject(i), user));
+                publications.add(Publication.build(jsonPublications.getJSONObject(i), instrument, musician));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         return publications;
     }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }
+

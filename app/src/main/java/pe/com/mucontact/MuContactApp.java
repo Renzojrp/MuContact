@@ -4,7 +4,10 @@ import android.app.Application;
 
 import com.androidnetworking.AndroidNetworking;
 
+import java.util.List;
+
 import pe.com.mucontact.models.Craftman;
+import pe.com.mucontact.models.Instrument;
 import pe.com.mucontact.models.Musician;
 import pe.com.mucontact.models.Publication;
 import pe.com.mucontact.models.Reward;
@@ -12,10 +15,10 @@ import pe.com.mucontact.models.User;
 import pe.com.mucontact.network.MuContactApiService;
 
 /**
- * Created by romer on 17/9/2017.
+ * Created by romer on 8/10/2017.
  */
 
-public class MuContactApp extends Application{
+public class MuContactApp extends Application {
     private static MuContactApp instance;
     private MuContactApiService muContactApiService;
 
@@ -24,7 +27,9 @@ public class MuContactApp extends Application{
         instance = this;
     }
 
-    public static MuContactApp getInstance() { return instance; }
+    public static MuContactApp getInstance() {
+        return instance;
+    }
 
     @Override
     public void onCreate() {
@@ -33,17 +38,12 @@ public class MuContactApp extends Application{
         muContactApiService = new MuContactApiService();
     }
 
-    public MuContactApp setCurrentUser(User user){
-        muContactApiService.setCurrentUser(user);
-        return this;
-    }
-
     public User getCurrentUser() {
         return muContactApiService.getCurrentUser();
     }
 
-    public MuContactApp setCurrentToken(String token){
-        muContactApiService.setCurrentToken(token);
+    public MuContactApp setCurrentUser(User user){
+        muContactApiService.setCurrentUser(user);
         return this;
     }
 
@@ -51,8 +51,8 @@ public class MuContactApp extends Application{
         return muContactApiService.getCurrentToken();
     }
 
-    public MuContactApp setCurrentMusician(Musician musician){
-        muContactApiService.setCurrentMusician(musician);
+    public MuContactApp setCurrentToken(String token){
+        muContactApiService.setCurrentToken(token);
         return this;
     }
 
@@ -60,8 +60,8 @@ public class MuContactApp extends Application{
         return muContactApiService.getCurrentMusician();
     }
 
-    public MuContactApp setCurrentPublication(Publication publication){
-        muContactApiService.setCurrentPublication(publication);
+    public MuContactApp setCurrentMusician(Musician musician){
+        muContactApiService.setCurrentMusician(musician);
         return this;
     }
 
@@ -69,8 +69,8 @@ public class MuContactApp extends Application{
         return muContactApiService.getCurrentPublication();
     }
 
-    public MuContactApp setCurrentReward(Reward reward) {
-        muContactApiService.setCurrentReward(reward);
+    public MuContactApp setCurrentPublication(Publication publication){
+        muContactApiService.setCurrentPublication(publication);
         return this;
     }
 
@@ -78,12 +78,35 @@ public class MuContactApp extends Application{
         return muContactApiService.getCurrentReward();
     }
 
-    public MuContactApp setCurrentCraftman(Craftman craftman){
-        muContactApiService.setCurrentCraftman(craftman);
+    public MuContactApp setCurrentReward(Reward reward) {
+        muContactApiService.setCurrentReward(reward);
         return this;
     }
 
     public Craftman getCurrentCraftman() {
         return muContactApiService.getCurrentCraftman();
+    }
+
+    public MuContactApp setCurrentCraftman(Craftman craftman){
+        muContactApiService.setCurrentCraftman(craftman);
+        return this;
+    }
+
+    public Instrument getCurrentInstrument() {
+        return muContactApiService.getCurrentInstrument();
+    }
+
+    public MuContactApp setCurrentInstrument(Instrument instrument){
+        muContactApiService.setCurrentInstrument(instrument);
+        return this;
+    }
+
+    public List<Instrument> getCurrentInstruments() {
+        return muContactApiService.getCurrentInstruments();
+    }
+
+    public MuContactApp setCurrentInstruments(List<Instrument> instrument){
+        muContactApiService.setCurrentInstruments(instrument);
+        return this;
     }
 }

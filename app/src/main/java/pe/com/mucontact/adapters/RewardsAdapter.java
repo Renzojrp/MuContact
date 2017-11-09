@@ -9,15 +9,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.androidnetworking.widget.ANImageView;
+
+import java.util.List;
+
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.activities.AboutRewardActivity;
 import pe.com.mucontact.models.Reward;
 
-import java.util.List;
-
 /**
- * Created by romer on 25/7/2017.
+ * Created by romer on 08/10/2017.
  */
 
 public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHolder>  {
@@ -39,10 +40,10 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(RewardsAdapter.ViewHolder holder, final int position) {
-        holder.titleTextView.setText(rewards.get(position).getTitle());
+        holder.titleTextView.setText(rewards.get(position).getName());
         holder.pictureANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
         holder.pictureANImageView.setErrorImageResId(R.mipmap.ic_launcher);
-        holder.pictureANImageView.setImageUrl(rewards.get(position).getUrl());
+        holder.pictureANImageView.setImageUrl(rewards.get(position).getPicture());
         holder.rewardCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -73,7 +74,7 @@ public class RewardsAdapter extends RecyclerView.Adapter<RewardsAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
             pictureANImageView = (ANImageView) itemView.findViewById(R.id.pictureANImageView);
-            titleTextView = (TextView) itemView.findViewById(R.id.titleTextView);
+            titleTextView = (TextView) itemView.findViewById(R.id.nameTextView);
             rewardCardView = (CardView) itemView.findViewById(R.id.rewardCardView);
         }
     }

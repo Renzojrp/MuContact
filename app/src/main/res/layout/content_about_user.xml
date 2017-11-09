@@ -81,4 +81,9 @@
         android:layout_margin="8dp"
         android:text="@string/sample_date"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToInstrumentActivity"/>
+
 </android.support.constraint.ConstraintLayout>

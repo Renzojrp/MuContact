@@ -9,12 +9,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.androidnetworking.widget.ANImageView;
+
+import java.util.List;
+
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.activities.AddPublicationActivity;
 import pe.com.mucontact.models.Publication;
-
-import java.util.List;
 
 /**
  * Created by romer on 25/7/2017.
@@ -44,9 +45,9 @@ public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapte
         holder.photoPublicationANImageView.setErrorImageResId(R.mipmap.ic_launcher);
         holder.photoPublicationANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
         holder.photoPublicationANImageView.setImageUrl("http://imagizer.imageshack.us/v2/320x240q90/922/fShoPj.jpg");
-        holder.instrumentTextView.setText(publications.get(position).getInstrument());
+        holder.instrumentTextView.setText(publications.get(position).getInstrument().getInstrument());
         holder.descriptionTextView.setText(publications.get(position).getDescription());
-        holder.locationReferenceTextView.setText(publications.get(position).getContext());
+        holder.locationReferenceTextView.setText(publications.get(position).getDeliveryDayFormat());
         holder.publicationConstraintLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

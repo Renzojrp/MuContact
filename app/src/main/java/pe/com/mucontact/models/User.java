@@ -8,35 +8,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by romer on 17/9/2017.
+ * Created by romer on 8/10/2017.
  */
 
 public class User {
-    private String _id;
+    private String id;
     private String email;
     private String password;
     private String displayName;
     private String userType;
     private String signupDate;
+    private String birthDate;
+    private String gender;
+    private Integer phone;
+    private String photo;
 
     public User() {
     }
 
-    public User(String _id, String email, String password, String displayName, String userType, String signupDate) {
-        this._id = _id;
-        this.email = email;
-        this.password = password;
-        this.displayName = displayName;
-        this.userType = userType;
-        this.signupDate = signupDate;
+    public User(String id, String email, String password, String displayName, String userType, String signupDate, String birthDate, String gender, Integer phone, String photo) {
+        this.setId(id);
+        this.setEmail(email);
+        this.setPassword(password);
+        this.setDisplayName(displayName);
+        this.setUserType(userType);
+        this.setSignupDate(signupDate);
+        this.setBirthDate(birthDate);
+        this.setGender(gender);
+        this.setPhone(phone);
+        this.setPhoto(photo);
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public User set_id(String _id) {
-        this._id = _id;
+    public User setId(String id) {
+        this.id = id;
         return this;
     }
 
@@ -85,15 +93,55 @@ public class User {
         return this;
     }
 
+    public String getBirthDate() {
+        return birthDate;
+    }
+
+    public User setBirthDate(String birthDate) {
+        this.birthDate = birthDate;
+        return this;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public User setGender(String gender) {
+        this.gender = gender;
+        return this;
+    }
+
+    public Integer getPhone() {
+        return phone;
+    }
+
+    public User setPhone(Integer phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public User setPhoto(String photo) {
+        this.photo = photo;
+        return this;
+    }
+
     public static User build(JSONObject jsonUser) {
         if(jsonUser == null) return null;
         User user = new User();
         try {
-            user.set_id(jsonUser.getString("_id"))
+            user.setId(jsonUser.getString("_id"))
                     .setEmail(jsonUser.getString("email"))
                     .setDisplayName(jsonUser.getString("displayName"))
                     .setUserType(jsonUser.getString("userType"))
-                    .setSignupDate(jsonUser.getString("signupDate"));
+                    .setSignupDate(jsonUser.getString("signupDate"))
+                    .setBirthDate(jsonUser.getString("birthDate"))
+                    .setGender(jsonUser.getString("gender"))
+                    .setPhone(jsonUser.getInt("phone"))
+                    .setPhoto(jsonUser.getString("photo"));
             return user;
         } catch (JSONException e) {
             e.printStackTrace();

@@ -11,12 +11,13 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+
+import org.json.JSONObject;
+
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.models.User;
 import pe.com.mucontact.network.MuContactApiService;
-
-import org.json.JSONObject;
 
 public class EditUserProfileActivity extends AppCompatActivity {
     private EditText displayNameEditText;
@@ -32,6 +33,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         displayNameEditText = (EditText) findViewById(R.id.displayNameInputEditText);
         emailEditText = (EditText) findViewById(R.id.emailInputEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordInputEditText);
@@ -48,7 +50,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 .addBodyParameter("email", emailEditText.getText().toString())
                 .addBodyParameter("displayName", displayNameEditText.getText().toString())
                 .addBodyParameter("password", passwordEditText.getText().toString())
-                .addPathParameter("user_id", user.get_id())
+                .addPathParameter("user_id", user.getId())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -79,4 +81,9 @@ public class EditUserProfileActivity extends AppCompatActivity {
             editProfile();
         }
     }
+
+    public void cancelClick(View v) {
+        finish();
+    }
 }
+

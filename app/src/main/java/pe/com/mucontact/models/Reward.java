@@ -1,7 +1,5 @@
 package pe.com.mucontact.models;
 
-import com.orm.SugarRecord;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,42 +8,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by romer on 25/7/2017.
+ * Created by romer on 8/10/2017.
  */
 
-public class Reward extends SugarRecord {
-    private String _id;
-    private String title;
+public class Reward {
+    private String id;
+    private String name;
+    private String picture;
     private String description;
-    private String url;
-    private Double value;
+    private Integer value;
 
     public Reward() {
     }
 
-    public Reward(String _id, String title, String description, String url, Double value) {
-        this._id = _id;
-        this.title = title;
-        this.description = description;
-        this.url = url;
-        this.value = value;
+    public Reward(String id, String name, String picture, String description, Integer value) {
+        this.setId(id);
+        this.setName(name);
+        this.setPicture(picture);
+        this.setDescription(description);
+        this.setValue(value);
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public Reward set_id(String _id) {
-        this._id = _id;
+    public Reward setId(String id) {
+        this.id = id;
         return this;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public Reward setTitle(String title) {
-        this.title = title;
+    public Reward setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public String getPicture() {
+        return picture;
+    }
+
+    public Reward setPicture(String picture) {
+        this.picture = picture;
         return this;
     }
 
@@ -58,20 +65,11 @@ public class Reward extends SugarRecord {
         return this;
     }
 
-    public String getUrl() {
-        return url;
-    }
-
-    public Reward setUrl(String url) {
-        this.url = url;
-        return this;
-    }
-
-    public Double getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public Reward setValue(Double value) {
+    public Reward setValue(Integer value) {
         this.value = value;
         return this;
     }
@@ -80,11 +78,11 @@ public class Reward extends SugarRecord {
         if(jsonReward == null) return null;
         Reward reward = new Reward();
         try {
-            reward.set_id(jsonReward.getString("_id"))
-                    .setTitle(jsonReward.getString("name"))
+            reward.setId(jsonReward.getString("_id"))
+                    .setName(jsonReward.getString("name"))
                     .setDescription(jsonReward.getString("description"))
-                    .setUrl(jsonReward.getString("image"))
-                    .setValue(jsonReward.getDouble("value"));
+                    .setPicture(jsonReward.getString("picture"))
+                    .setValue(jsonReward.getInt("value"));
             return reward;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -104,5 +102,4 @@ public class Reward extends SugarRecord {
             }
         return rewards;
     }
-
 }

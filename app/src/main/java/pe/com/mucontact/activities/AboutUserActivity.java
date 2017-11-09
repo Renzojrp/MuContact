@@ -7,9 +7,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.androidnetworking.widget.ANImageView;
+
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.models.Musician;
@@ -35,26 +37,8 @@ public class AboutUserActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        user = MuContactApp.getInstance().getCurrentUser();
-        musician = MuContactApp.getInstance().getCurrentMusician();
+        userInformation();
 
-        photoANImageView = (ANImageView) findViewById(R.id.photoANImageView);
-        displayNameTextView = (TextView) findViewById(R.id.displayNameTextView);
-        emailTextView = (TextView) findViewById(R.id.emailTextView);
-        userTypeTextView = (TextView) findViewById(R.id.userTypeTextView);
-        phoneTextView = (TextView) findViewById(R.id.phoneTextView);
-        genderTextView = (TextView) findViewById(R.id.genderTextView);
-        birthDateTextView = (TextView) findViewById(R.id.birthDateTextView);
-
-        photoANImageView.setErrorImageResId(R.mipmap.ic_launcher);
-        photoANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
-        //photoANImageView.setImageUrl(sources.get(position).getUrlToSmallLogo());
-        displayNameTextView.setText(user.getDisplayName());
-        emailTextView.setText(user.getEmail());
-        userTypeTextView.setText(user.getUserType());
-        phoneTextView.setText((musician.getPhone()));
-        genderTextView.setText(musician.getGender());
-        birthDateTextView.setText(musician.getBirthDate());
     }
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,4 +59,38 @@ public class AboutUserActivity extends AppCompatActivity {
         }
     }
 
+    public void userInformation() {
+        user = MuContactApp.getInstance().getCurrentUser();
+        musician = MuContactApp.getInstance().getCurrentMusician();
+
+        photoANImageView = (ANImageView) findViewById(R.id.photoANImageView);
+        displayNameTextView = (TextView) findViewById(R.id.displayNameTextView);
+        emailTextView = (TextView) findViewById(R.id.emailTextView);
+        userTypeTextView = (TextView) findViewById(R.id.userTypeTextView);
+        phoneTextView = (TextView) findViewById(R.id.phoneTextView);
+        genderTextView = (TextView) findViewById(R.id.genderTextView);
+        birthDateTextView = (TextView) findViewById(R.id.birthDateTextView);
+
+        photoANImageView.setErrorImageResId(R.mipmap.ic_launcher);
+        photoANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
+        //photoANImageView.setImageUrl(sources.get(position).getUrlToSmallLogo());
+        displayNameTextView.setText(user.getDisplayName());
+        emailTextView.setText(user.getEmail());
+        userTypeTextView.setText(user.getUserType());
+        phoneTextView.setText((user.getPhone().toString()));
+        genderTextView.setText(user.getGender());
+        birthDateTextView.setText(user.getBirthDate());
+    }
+
+    public void goToInstrumentActivity(View v) {
+        v.getContext()
+                .startActivity(new Intent(v.getContext(),
+                        InstrumentActivity.class));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        userInformation();
+    }
 }

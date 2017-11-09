@@ -8,21 +8,26 @@
     tools:context="pe.com.mucontact.activities.AddPublicationActivity"
     tools:showIn="@layout/activity_add_publication">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/instrumentTextInputLayout"
+    <TextView
+        android:id="@+id/instrumentTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/instrument"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Spinner
+        android:id="@+id/instrumentSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-        <android.support.design.widget.TextInputEditText
-            android:id="@+id/instrumentInputEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/instrument_hint"
-            android:inputType="textPersonName"/>
-    </android.support.design.widget.TextInputLayout>
+        app:layout_constraintTop_toBottomOf="@id/instrumentTextView" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/descriptionTextInputLayout"
@@ -31,7 +36,7 @@
         android:layout_margin="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/instrumentTextInputLayout">
+        app:layout_constraintTop_toBottomOf="@id/instrumentSpinner">
         <android.support.design.widget.TextInputEditText
             android:id="@+id/descriptionInputEditText"
             android:layout_width="match_parent"
@@ -63,7 +68,7 @@
         app:layout_constraintTop_toBottomOf="@id/locationAtTextInputLayout"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_margin="16dp"
-        android:text="@string/delivery_day"
+        android:text="@string/deliveryDayButton"
         style="@style/Base.Widget.AppCompat.Button.Colored"/>
 
     <EditText
@@ -73,17 +78,5 @@
         app:layout_constraintTop_toBottomOf="@id/locationAtTextInputLayout"
         app:layout_constraintStart_toEndOf="@id/dateButton"
         android:layout_margin="16dp"/>
-
-    <Button
-        android:id="@+id/camaraButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/dateButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="16dp"
-        android:text="camara"
-        style="@style/Base.Widget.AppCompat.Button.Colored"
-        android:onClick="camaraClick"/>
 
 </android.support.constraint.ConstraintLayout>

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -15,16 +16,18 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import pe.com.mucontact.MuContactApp;
-import pe.com.mucontact.R;
-import pe.com.mucontact.models.Musician;
-import pe.com.mucontact.models.User;
-import pe.com.mucontact.network.MuContactApiService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
+
+import pe.com.mucontact.MuContactApp;
+import pe.com.mucontact.R;
+import pe.com.mucontact.models.Instrument;
+import pe.com.mucontact.models.Musician;
+import pe.com.mucontact.models.User;
+import pe.com.mucontact.network.MuContactApiService;
 
 public class LoginActivity extends AppCompatActivity {
     EditText emailEditText;
@@ -40,13 +43,13 @@ public class LoginActivity extends AppCompatActivity {
 
     User user;
     String token;
-    List<Musician> musicians;
+    Musician musician;
+    List<Instrument> instruments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         emailEditText = (EditText) findViewById(R.id.emailTextInputEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordInputEditText);
@@ -84,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addBodyParameter("email", emailEditText.getText().toString())
                 .addBodyParameter("password", passwordEditText.getText().toString())
                 .setTag(TAG)
-                .setPriority(Priority.MEDIUM)
+                .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -118,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void getMusicianByUser() {
         AndroidNetworking.get(MuContactApiService.MUSICIAN_USER_URL)
-                .addPathParameter("user_id", user.get_id())
+                .addPathParameter("user_id", user.getId())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -127,8 +130,9 @@ public class LoginActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         if(response == null) return;
                         try {
-                            musicians = Musician.build(response.getJSONArray("musician"), user);
-                            MuContactApp.getInstance().setCurrentMusician(musicians.get(0));
+                            musician = Musician.build(response.getJSONObject("musician"), user);
+                            MuContactApp.getInstance().setCurrentMusician(musician);
+                            updateInstruments();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -137,6 +141,32 @@ public class LoginActivity extends AppCompatActivity {
                     public void onError(ANError error) {
                         Toast.makeText(getApplicationContext(), R.string.error_profile_musician, Toast.LENGTH_SHORT).show();
                         finish();
+                    }
+                });
+    }
+
+    private void updateInstruments() {
+        AndroidNetworking
+                .get(MuContactApiService.INSTRUMET_MUSICIAN_URL)
+                .addPathParameter("musician_id", musician.getId())
+                .setTag(TAG)
+                .setPriority(Priority.LOW)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        if(response == null) return;
+                        try {
+                            instruments = Instrument.build(response.getJSONArray("instruments"), musician);
+                            Log.d(TAG, "Found Instruments: " + String.valueOf(instruments.size()));
+                            MuContactApp.getInstance().setCurrentInstruments(instruments);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    @Override
+                    public void onError(ANError anError) {
+                        Log.d(TAG, anError.getMessage());
                     }
                 });
     }

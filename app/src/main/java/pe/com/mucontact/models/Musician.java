@@ -8,82 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by romer on 17/9/2017.
+ * Created by romer on 8/10/2017.
  */
 
 public class Musician {
-    private String _id;
-    private String birthDate;
-    private String gender;
-    private String phone;
-    private String photo;
-    private Double points;
+    private String id;
     private User user;
+    private Integer points;
 
     public Musician() {
     }
 
-    public Musician(String _id, String birthDate, String gender, String phone, String photo, Double points, User user) {
-        this._id = _id;
-        this.birthDate = birthDate;
-        this.gender = gender;
-        this.phone = phone;
-        this.photo = photo;
-        this.points = points;
-        this.user = user;
+    public Musician(String id, User user, Integer points) {
+        this.setId(id);
+        this.setUser(user);
+        this.setPoints(points);
     }
 
-    public String get_id() {
-        return _id;
+    public String getId() {
+        return id;
     }
 
-    public Musician set_id(String _id) {
-        this._id = _id;
-        return this;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public Musician setBirthDate(String birthDate) {
-        this.birthDate = birthDate;
-        return this;
-    }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public Musician setGender(String gender) {
-        this.gender = gender;
-        return this;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public Musician setPhone(String phone) {
-        this.phone = phone;
-        return this;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public Musician setPhoto(String photo) {
-        this.photo = photo;
-        return this;
-    }
-
-    public Double getPoints() {
-        return points;
-    }
-
-    public Musician setPoints(Double points) {
-        this.points = points;
+    public Musician setId(String id) {
+        this.id = id;
         return this;
     }
 
@@ -96,16 +43,22 @@ public class Musician {
         return this;
     }
 
+    public Integer getPoints() {
+        return points;
+    }
+
+    public Musician setPoints(Integer points) {
+        this.points = points;
+        return this;
+    }
+
     public static Musician build(JSONObject jsonMusician, User user) {
         if(jsonMusician == null) return null;
         Musician musician = new Musician();
         try {
-            musician.set_id(jsonMusician.getString("_id"))
-                    .setBirthDate(jsonMusician.getString("birthDate"))
-                    .setGender(jsonMusician.getString("gender"))
-                    .setPhone(jsonMusician.getString("phone"))
-                    .setPhoto(jsonMusician.getString("photo"))
-                    .setUser(user);
+            musician.setId(jsonMusician.getString("_id"))
+                    .setUser(user)
+                    .setPoints(jsonMusician.getInt("points"));
             return musician;
         } catch (JSONException e) {
             e.printStackTrace();

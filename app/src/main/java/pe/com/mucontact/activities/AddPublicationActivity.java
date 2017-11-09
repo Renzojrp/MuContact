@@ -1,45 +1,40 @@
 package pe.com.mucontact.activities;
 
-import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import pe.com.mucontact.MuContactApp;
-import pe.com.mucontact.R;
-import pe.com.mucontact.models.User;
-import pe.com.mucontact.network.MuContactApiService;
 
 import org.json.JSONObject;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.List;
+import java.util.Objects;
+
+import pe.com.mucontact.MuContactApp;
+import pe.com.mucontact.R;
+import pe.com.mucontact.models.Musician;
+import pe.com.mucontact.models.User;
+import pe.com.mucontact.network.MuContactApiService;
 
 public class AddPublicationActivity extends AppCompatActivity {
-    private final String photoRute = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/misfotos/";
-    private File file = new File(photoRute);
-    private EditText instrumentEditText;
     private EditText descriptionEditText;
     private EditText locationAtEditText;
     private EditText dateEditText;
@@ -47,10 +42,13 @@ public class AddPublicationActivity extends AppCompatActivity {
     private int day;
     private int month;
     private int year;
+    private Spinner spinner;
+    List<String> nameInstrument = new ArrayList<String>();
+    List<String> idInstrument = new ArrayList<String>();
+    Musician musician;
     User user;
     String TAG = "MuContact";
-    private static final int REQUEST_PERMISSION_CAMARA = 1;
-    Intent cameraIntent;
+    String idInstrumentSelected;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +58,6 @@ public class AddPublicationActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        instrumentEditText = (EditText) findViewById( R.id.instrumentInputEditText);
         descriptionEditText = (EditText) findViewById( R.id.descriptionInputEditText);
         locationAtEditText = (EditText) findViewById( R.id.locationAtInputEditText);
         dateEditText = (EditText) findViewById(R.id.dateEditText);
@@ -72,67 +69,64 @@ public class AddPublicationActivity extends AppCompatActivity {
             }
         });
 
-        user = MuContactApp.getInstance().getCurrentUser();
-        layoutByOrigin();
+        musician = MuContactApp.getInstance().getCurrentMusician();
+        spinner = (Spinner) findViewById(R.id.instrumentSpinner);
 
-        file.mkdirs();
-    }
-
-    @SuppressLint("SimpleDateFormat")
-    private String getCode() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmmss");
-        String date = dateFormat.format(new Date() );
-        String photoCode = "pic_" + date;
-        return photoCode;
-    }
-
-    public void camaraClick(View v) {
-        cameraIntent = new Intent(
-                android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-        File imagesFolder = new File(
-                Environment.getExternalStorageDirectory(), "misfots");
-        imagesFolder.mkdirs();
-        File image = new File(imagesFolder, "foto.jpg");
-        Uri uriSavedImage = Uri.fromFile(image);
-        //cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uriSavedImage);
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            startActivityForResult(cameraIntent, 1);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_PERMISSION_CAMARA);
+        for(int i = 0; i<MuContactApp.getInstance().getCurrentInstruments().size(); i++) {
+            idInstrument.add(MuContactApp.getInstance().getCurrentInstruments().get(i).getId());
+            nameInstrument.add(MuContactApp.getInstance().getCurrentInstruments().get(i).getInstrument());
         }
-    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_PERMISSION_CAMARA) {
-            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                startActivityForResult(cameraIntent, 1);
+        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, nameInstrument);
+        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(dataAdapter);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
+                idInstrumentSelected = idInstrument.get(pos);
             }
-        }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                idInstrumentSelected = idInstrument.get(0);
+            }
+        });
+
+        layoutByOrigin();
     }
 
     public void floatingActionButtonClick(View view) {
-        if(instrumentEditText.getText().toString().isEmpty()
-                || descriptionEditText.getText().toString().isEmpty()
+        if(descriptionEditText.getText().toString().isEmpty()
                 || locationAtEditText.getText().toString().isEmpty())
         {
             Toast.makeText(getApplicationContext(), R.string.empty_fild, Toast.LENGTH_SHORT).show();
         } else {
-            if (MuContactApp.getInstance().getCurrentPublication() == null) {
-                savePublication();
+            if (MuContactApp.getInstance().getCurrentCraftman() != null) {
+                sendOrder();
             } else {
-                editPublication();
+                if (MuContactApp.getInstance().getCurrentPublication() == null) {
+                    savePublication();
+                } else {
+                    editPublication();
+                }
             }
+
         }
     }
 
     public void layoutByOrigin() {
         if(MuContactApp.getInstance().getCurrentPublication() != null) {
-            instrumentEditText.setText(MuContactApp.getInstance().getCurrentPublication().getInstrument());
             descriptionEditText.setText(MuContactApp.getInstance().getCurrentPublication().getDescription());
-            locationAtEditText.setText(MuContactApp.getInstance().getCurrentPublication().getLocationReference());
+            locationAtEditText.setText(MuContactApp.getInstance().getCurrentPublication().getLocationAt());
+            dateEditText.setText(MuContactApp.getInstance().getCurrentPublication().getDeliveryDay());
+            for(int i = 0; i<MuContactApp.getInstance().getCurrentInstruments().size(); i++) {
+                if(Objects.equals(MuContactApp.getInstance().getCurrentPublication().getInstrument().getId(), idInstrument.get(i))) {
+                    spinner.setSelection(i);
+                }
+            }
+
         }
     }
 
@@ -174,10 +168,11 @@ public class AddPublicationActivity extends AppCompatActivity {
 
     private void savePublication() {
         AndroidNetworking.post(MuContactApiService.PUBLICATION_URL)
-                .addBodyParameter("instrument", instrumentEditText.getText().toString())
+                .addBodyParameter("musician", musician.getId())
+                .addBodyParameter("instrument", idInstrumentSelected)
                 .addBodyParameter("description", descriptionEditText.getText().toString())
                 .addBodyParameter("locationAt", locationAtEditText.getText().toString())
-                .addBodyParameter("user", user.get_id())
+                .addBodyParameter("deliveryDay", dateEditText.getText().toString())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -196,11 +191,12 @@ public class AddPublicationActivity extends AppCompatActivity {
 
     private void editPublication() {
         AndroidNetworking.put(MuContactApiService.PUBLICATION_EDIT_URL)
-                .addBodyParameter("instrument", instrumentEditText.getText().toString())
+                .addBodyParameter("musician", musician.getId())
+                .addBodyParameter("instrument", idInstrumentSelected)
                 .addBodyParameter("description", descriptionEditText.getText().toString())
                 .addBodyParameter("locationAt", locationAtEditText.getText().toString())
-                .addBodyParameter("user", user.get_id())
-                .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().get_id())
+                .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().getId())
+                .addBodyParameter("deliveryDay", dateEditText.getText().toString())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -208,20 +204,18 @@ public class AddPublicationActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(getApplicationContext(), R.string.publication_save, Toast.LENGTH_SHORT).show();
-                        MuContactApp.getInstance().setCurrentPublication(null);
                         finish();
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(getApplicationContext(), R.string.error_publication_save, Toast.LENGTH_SHORT).show();
-                        MuContactApp.getInstance().setCurrentPublication(null);
                     }
                 });
     }
 
     private void deletePublication() {
         AndroidNetworking.delete(MuContactApiService.PUBLICATION_EDIT_URL)
-                .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().get_id())
+                .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().getId())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -229,20 +223,37 @@ public class AddPublicationActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(getApplicationContext(), R.string.publication_delete, Toast.LENGTH_SHORT).show();
-                        MuContactApp.getInstance().setCurrentPublication(null);
                         finish();
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(getApplicationContext(), R.string.error_publication_delete, Toast.LENGTH_SHORT).show();
-                        MuContactApp.getInstance().setCurrentPublication(null);
                     }
                 });
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        MuContactApp.getInstance().setCurrentPublication(null);
+
+    private void sendOrder() {
+        AndroidNetworking.post(MuContactApiService.ORDER_URL)
+                .addBodyParameter("craftman", MuContactApp.getInstance().getCurrentCraftman().getId())
+                .addBodyParameter("instrument", idInstrumentSelected)
+                .addBodyParameter("description", descriptionEditText.getText().toString())
+                .addBodyParameter("locationAt", locationAtEditText.getText().toString())
+                .addBodyParameter("deliveryDay", dateEditText.getText().toString())
+                .setTag(TAG)
+                .setPriority(Priority.MEDIUM)
+                .build()
+                .getAsJSONObject(new JSONObjectRequestListener() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(getApplicationContext(), R.string.order_save, Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                    @Override
+                    public void onError(ANError error) {
+                        Toast.makeText(getApplicationContext(), R.string.error_order_save, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
+
 }

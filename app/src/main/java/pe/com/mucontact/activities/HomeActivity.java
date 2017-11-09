@@ -11,9 +11,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.fragments.ContractFragment;
-import pe.com.mucontact.fragments.CraftmanFragment;
+import pe.com.mucontact.fragments.OrderFragment;
 import pe.com.mucontact.fragments.PublicationFragment;
 
 public class HomeActivity extends AppCompatActivity {
@@ -30,12 +31,12 @@ public class HomeActivity extends AppCompatActivity {
                                 return navigateAccordingTo(item.getItemId());
                             }
                         });
-        navigateAccordingTo(R.id.navigation_craftmen);
+        navigateAccordingTo(R.id.navigation_orders);
     }
 
     private Fragment getFragmentFor(int id) {
         switch (id) {
-            case R.id.navigation_craftmen: return new CraftmanFragment();
+            case R.id.navigation_orders: return new OrderFragment();
             case R.id.navigation_publications: return new PublicationFragment();
             case R.id.navigation_contracts: return new ContractFragment();
         }
@@ -79,5 +80,13 @@ public class HomeActivity extends AppCompatActivity {
         v.getContext()
                 .startActivity(new Intent(v.getContext(),
                         AddPublicationActivity.class));
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        MuContactApp.getInstance().setCurrentPublication(null);
+        MuContactApp.getInstance().setCurrentReward(null);
+        MuContactApp.getInstance().setCurrentCraftman(null);
     }
 }

@@ -30,7 +30,7 @@ import pe.com.mucontact.network.MuContactApiService;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CraftmanFragment extends Fragment {
+public class OrderFragment extends Fragment {
     private RecyclerView homeRecyclerView;
     private CraftmenAdapter craftmanAdapter;
     private RecyclerView.LayoutManager craftmanLayoutManager;
@@ -38,7 +38,7 @@ public class CraftmanFragment extends Fragment {
     private static String TAG = "MuContact";
     private User user;
 
-    public CraftmanFragment() {
+    public OrderFragment() {
         // Required empty public constructor
     }
 
@@ -47,7 +47,7 @@ public class CraftmanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_craftman, container, false);
+        View view = inflater.inflate(R.layout.fragment_order, container, false);
         homeRecyclerView = (RecyclerView) view.findViewById(R.id.craftmanRecyclerView);
         craftmen = new ArrayList<>();
         craftmanAdapter = (new CraftmenAdapter()).setCraftmen(craftmen);
@@ -57,6 +57,7 @@ public class CraftmanFragment extends Fragment {
         updateCraftmen();
         return view;
     }
+
     private void updateCraftmen() {
         AndroidNetworking
                 .get(MuContactApiService.CRAFTMAN_URL)
@@ -66,7 +67,7 @@ public class CraftmanFragment extends Fragment {
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        if(response == null) return;
+                        if (response == null) return;
                         try {
                             craftmen = Craftman.build(response.getJSONArray("craftmen"), user);
                             Log.d(TAG, "Found Craftmen: " + String.valueOf(craftmen.size()));
@@ -76,6 +77,7 @@ public class CraftmanFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+
                     @Override
                     public void onError(ANError anError) {
                         Log.d(TAG, anError.getMessage());
@@ -83,4 +85,3 @@ public class CraftmanFragment extends Fragment {
                 });
     }
 }
-

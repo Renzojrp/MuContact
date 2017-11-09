@@ -1,5 +1,6 @@
 package pe.com.mucontact.fragments;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,18 +14,20 @@ import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import pe.com.mucontact.MuContactApp;
-import pe.com.mucontact.R;
-import pe.com.mucontact.adapters.PublicationsAdapter;
-import pe.com.mucontact.models.Publication;
-import pe.com.mucontact.models.User;
-import pe.com.mucontact.network.MuContactApiService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import pe.com.mucontact.MuContactApp;
+import pe.com.mucontact.R;
+import pe.com.mucontact.adapters.PublicationsAdapter;
+import pe.com.mucontact.models.Instrument;
+import pe.com.mucontact.models.Musician;
+import pe.com.mucontact.models.Publication;
+import pe.com.mucontact.network.MuContactApiService;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,11 +38,14 @@ public class PublicationFragment extends Fragment {
     private RecyclerView.LayoutManager publicationsLayoutManager;
     private List<Publication> publications;
     private static String TAG = "MuContact";
-    private User user;
+    private Musician musician;
+    private Instrument instrument;
+
 
     public PublicationFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,15 +58,15 @@ public class PublicationFragment extends Fragment {
         publicationsLayoutManager = new LinearLayoutManager(view.getContext());
         publicationsRecyclerView.setAdapter(publicationsAdapter);
         publicationsRecyclerView.setLayoutManager(publicationsLayoutManager);
-        user = MuContactApp.getInstance().getCurrentUser();
+        musician = MuContactApp.getInstance().getCurrentMusician();
         updatePublications();
         return view;
     }
 
     private void updatePublications() {
-        AndroidNetworking
+       AndroidNetworking
                 .get(MuContactApiService.PUBLICATION_USER_URL)
-                .addPathParameter("user_id", user.get_id())
+                .addPathParameter("musician_id", musician.getId())
                 .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
@@ -69,7 +75,7 @@ public class PublicationFragment extends Fragment {
                     public void onResponse(JSONObject response) {
                         if (response == null) return;
                         try {
-                            publications = Publication.build(response.getJSONArray("publications"), user);
+                            publications = Publication.build(response.getJSONArray("publications"), instrument, musician);
                             Log.d(TAG, "Found Publications: " + String.valueOf(publications.size()));
                             publicationsAdapter.setPublications(publications);
                             publicationsAdapter.notifyDataSetChanged();

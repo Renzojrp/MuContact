@@ -6,13 +6,14 @@ import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
 import com.androidnetworking.widget.ANImageView;
+
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.models.Reward;
 
 public class AboutRewardActivity extends AppCompatActivity {
     private ANImageView pictureANImageView;
-    private TextView titleTextView;
+    private TextView nameTextView;
     private TextView valueTextView;
     private TextView descriptionTextView;
     Reward reward;
@@ -26,18 +27,18 @@ public class AboutRewardActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         pictureANImageView = (ANImageView) findViewById(R.id.pictureANImageView);
-        titleTextView = (TextView) findViewById(R.id.titleTextView);
+        nameTextView = (TextView) findViewById(R.id.nameTextView);
         valueTextView = (TextView) findViewById(R.id.valueTextView);
         descriptionTextView = (TextView) findViewById(R.id.descriptionTextView);
         reward = MuContactApp.getInstance().getCurrentReward();
 
-        titleTextView.setText(reward.getTitle());
+        nameTextView.setText(reward.getName());
         valueTextView.setText(reward.getValue().toString());
         descriptionTextView.setText(reward.getDescription());
 
         pictureANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
         pictureANImageView.setErrorImageResId(R.mipmap.ic_launcher);
-        pictureANImageView.setImageUrl(reward.getUrl());
+        pictureANImageView.setImageUrl(reward.getPicture());
     }
 
 }

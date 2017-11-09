@@ -1,5 +1,6 @@
 package pe.com.mucontact.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -12,10 +13,6 @@ import com.androidnetworking.widget.ANImageView;
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.models.Craftman;
-
-/**
- * Created by Franklin on 26/07/2017.
- */
 
 public class AboutCraftmanActivity extends AppCompatActivity {
     private ANImageView photCraftmanANImageView;
@@ -44,21 +41,13 @@ public class AboutCraftmanActivity extends AppCompatActivity {
         //photCraftmanANImageView.setImageUrl();
         nameTextView.setText(craftman.getUser().getDisplayName());
         descriptionTextView.setText(craftman.getDescription());
-        phoneTextView.setText(craftman.getPhone());
-        ratingBar.setRating(Float.parseFloat(craftman.getLevel()));
-
-        /*sendOrderButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CreateContractActivity.class);
-                startActivity(intent);
-            }
-        });*/
-
+        phoneTextView.setText(craftman.getUser().getPhone().toString());
+        ratingBar.setRating(craftman.getQualification());
     }
 
-    public void testear(View v){
-        //Intent intent = new Intent(getApplicationContext(), CreateContractActivity.class);
-        //startActivity(intent);
+    public void goToAddPublicationActivity(View v) {
+        v.getContext()
+                .startActivity(new Intent(v.getContext(),
+                        AddPublicationActivity.class));
     }
 }
