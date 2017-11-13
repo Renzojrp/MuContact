@@ -66,7 +66,7 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_profile:
-                startActivity(new Intent(getApplicationContext(), AboutUserActivity.class));
+                startActivity(new Intent(getApplicationContext(), AboutMusicianActivity.class));
                 return true;
             case R.id.action_rewards:
                 startActivity(new Intent(getApplicationContext(), RewardActivity.class));
@@ -82,6 +82,12 @@ public class HomeActivity extends AppCompatActivity {
                         AddPublicationActivity.class));
     }
 
+    public void goToCraftmanActivity(View v) {
+        v.getContext()
+                .startActivity(new Intent(v.getContext(),
+                        CraftmanActivity.class));
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -89,4 +95,5 @@ public class HomeActivity extends AppCompatActivity {
         MuContactApp.getInstance().setCurrentReward(null);
         MuContactApp.getInstance().setCurrentCraftman(null);
     }
+
 }

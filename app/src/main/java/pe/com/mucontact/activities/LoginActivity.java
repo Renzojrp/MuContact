@@ -33,13 +33,14 @@ public class LoginActivity extends AppCompatActivity {
     EditText emailEditText;
     EditText passwordEditText;
     TextView signUpTextView;
-    ProgressBar loginProgressBar;
+    ProgressBar signInProgressBar;
+
     Intent intent;
 
     boolean correctEmail = false;
     boolean correctPassword= false;
 
-    String TAG = "MuContact";
+    private static String TAG = "MuContact";
 
     User user;
     String token;
@@ -50,21 +51,23 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         emailEditText = (EditText) findViewById(R.id.emailTextInputEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordInputEditText);
-        loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
+        signInProgressBar = (ProgressBar) findViewById(R.id.signInProgressBar);
         signUpTextView = (TextView) findViewById(R.id.signUpTextView);
-        loginProgressBar.setVisibility(View.GONE);
+        signInProgressBar.setVisibility(View.GONE);
     }
 
-    public void loginClick(View v) {
-        loginProgressBar.setVisibility(View.VISIBLE);
-        intent = new Intent (v.getContext(), HomeActivity.class);
+    public void signInClick(View v) {
+        signInProgressBar.setVisibility(View.VISIBLE);
+        intent = new Intent(v.getContext(), HomeActivity.class);
         if(!Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()){
             emailEditText.setError(getResources().getString(R.string.invalid_email));
             correctEmail = false;
-            loginProgressBar.setVisibility(View.INVISIBLE);
+            signInProgressBar.setVisibility(View.INVISIBLE);
         } else {
             emailEditText.setError(null);
             correctEmail = true;
@@ -72,21 +75,20 @@ public class LoginActivity extends AppCompatActivity {
         if(passwordEditText.getText().toString().length() == 0) {
             passwordEditText.setError(getResources().getString(R.string.invalid_password));
             correctPassword = false;
-            loginProgressBar.setVisibility(View.INVISIBLE);
+            signInProgressBar.setVisibility(View.INVISIBLE);
         } else {
             passwordEditText.setError(null);
             correctPassword = true;
         }
         if(correctEmail && correctPassword) {
-            login();
+            signIn();
         }
     }
 
-    private void login() {
+    private void signIn() {
         AndroidNetworking.post(MuContactApiService.SIGNIN_URL)
                 .addBodyParameter("email", emailEditText.getText().toString())
                 .addBodyParameter("password", passwordEditText.getText().toString())
-                .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -98,23 +100,22 @@ public class LoginActivity extends AppCompatActivity {
                             if(user.getUserType().equals("Musician")) {
                                 user.setPassword(passwordEditText.getText().toString());
                                 token = response.getString("token");
-                                MuContactApp.getInstance().setCurrentToken(token);
+                                MuContactApp.getInstance().setCurrentToken("Bearer " + token);
                                 MuContactApp.getInstance().setCurrentUser(user);
-                                startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
                                 getMusicianByUser();
                             } else {
                                 Toast.makeText(getApplicationContext(), R.string.error_message_login, Toast.LENGTH_SHORT).show();
-                                loginProgressBar.setVisibility(View.INVISIBLE);
+                                signInProgressBar.setVisibility(View.INVISIBLE);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        signInProgressBar.setVisibility(View.INVISIBLE);
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(getApplicationContext(), R.string.incorrect_login, Toast.LENGTH_SHORT).show();
-                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        signInProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
@@ -122,6 +123,7 @@ public class LoginActivity extends AppCompatActivity {
     private void getMusicianByUser() {
         AndroidNetworking.get(MuContactApiService.MUSICIAN_USER_URL)
                 .addPathParameter("user_id", user.getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -149,6 +151,7 @@ public class LoginActivity extends AppCompatActivity {
         AndroidNetworking
                 .get(MuContactApiService.INSTRUMET_MUSICIAN_URL)
                 .addPathParameter("musician_id", musician.getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
@@ -160,6 +163,8 @@ public class LoginActivity extends AppCompatActivity {
                             instruments = Instrument.build(response.getJSONArray("instruments"), musician);
                             Log.d(TAG, "Found Instruments: " + String.valueOf(instruments.size()));
                             MuContactApp.getInstance().setCurrentInstruments(instruments);
+                            startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                            finish();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -167,7 +172,9 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onError(ANError anError) {
                         Log.d(TAG, anError.getMessage());
+                        finish();
                     }
+
                 });
     }
 

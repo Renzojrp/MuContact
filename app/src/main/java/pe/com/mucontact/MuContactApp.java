@@ -9,13 +9,14 @@ import java.util.List;
 import pe.com.mucontact.models.Craftman;
 import pe.com.mucontact.models.Instrument;
 import pe.com.mucontact.models.Musician;
+import pe.com.mucontact.models.Order;
 import pe.com.mucontact.models.Publication;
 import pe.com.mucontact.models.Reward;
 import pe.com.mucontact.models.User;
 import pe.com.mucontact.network.MuContactApiService;
 
 /**
- * Created by romer on 8/10/2017.
+ * Created by romer on 12/11/2017.
  */
 
 public class MuContactApp extends Application {
@@ -31,7 +32,6 @@ public class MuContactApp extends Application {
         return instance;
     }
 
-    @Override
     public void onCreate() {
         super.onCreate();
         AndroidNetworking.initialize(getApplicationContext());
@@ -71,6 +71,15 @@ public class MuContactApp extends Application {
 
     public MuContactApp setCurrentPublication(Publication publication){
         muContactApiService.setCurrentPublication(publication);
+        return this;
+    }
+
+    public Order getCurrentOrder() {
+        return muContactApiService.getCurrentOrder();
+    }
+
+    public MuContactApp setCurrentOrder(Order order){
+        muContactApiService.setCurrentOrder(order);
         return this;
     }
 

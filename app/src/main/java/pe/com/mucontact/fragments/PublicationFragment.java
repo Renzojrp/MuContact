@@ -1,6 +1,7 @@
 package pe.com.mucontact.fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +24,7 @@ import java.util.List;
 
 import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
+import pe.com.mucontact.activities.AddPublicationActivity;
 import pe.com.mucontact.adapters.PublicationsAdapter;
 import pe.com.mucontact.models.Instrument;
 import pe.com.mucontact.models.Musician;
@@ -40,7 +42,6 @@ public class PublicationFragment extends Fragment {
     private static String TAG = "MuContact";
     private Musician musician;
     private Instrument instrument;
-
 
     public PublicationFragment() {
         // Required empty public constructor
@@ -64,9 +65,10 @@ public class PublicationFragment extends Fragment {
     }
 
     private void updatePublications() {
-       AndroidNetworking
+        AndroidNetworking
                 .get(MuContactApiService.PUBLICATION_USER_URL)
                 .addPathParameter("musician_id", musician.getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
@@ -94,5 +96,11 @@ public class PublicationFragment extends Fragment {
     public void onResume() {
         super.onResume();
         updatePublications();
+    }
+
+    public void goToAddPublication(View v) {
+        v.getContext()
+                .startActivity(new Intent(v.getContext(),
+                        AddPublicationActivity.class));
     }
 }

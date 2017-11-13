@@ -1,5 +1,6 @@
 package pe.com.mucontact.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -20,8 +21,7 @@ import pe.com.mucontact.models.Publication;
 /**
  * Created by romer on 25/7/2017.
  */
-
-public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapter.ViewHolder>{
+public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapter.ViewHolder> {
     private List<Publication> publications;
 
     public PublicationsAdapter() {
@@ -35,12 +35,12 @@ public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapte
     public PublicationsAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new ViewHolder(LayoutInflater
                 .from(parent.getContext())
-                .inflate(R.layout.content_publication, parent,false));
+                .inflate(R.layout.content_publication, parent, false));
     }
 
     @Override
     public void onBindViewHolder(
-            PublicationsAdapter.ViewHolder holder, int position) {
+            PublicationsAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
 
         holder.photoPublicationANImageView.setErrorImageResId(R.mipmap.ic_launcher);
         holder.photoPublicationANImageView.setDefaultImageResId(R.mipmap.ic_launcher);
@@ -58,6 +58,7 @@ public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapte
             }
         });
     }
+
 
     @Override
     public int getItemCount() {
@@ -79,6 +80,7 @@ public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapte
         TextView descriptionTextView;
         TextView locationReferenceTextView;
         ConstraintLayout publicationConstraintLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
             photoPublicationANImageView = (ANImageView) itemView.findViewById(R.id.photoPublicationANImageView);
@@ -88,5 +90,4 @@ public class PublicationsAdapter extends RecyclerView.Adapter<PublicationsAdapte
             publicationConstraintLayout = (ConstraintLayout) itemView.findViewById(R.id.publicationConstraintLayout);
         }
     }
-
 }

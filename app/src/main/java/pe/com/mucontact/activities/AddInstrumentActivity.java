@@ -7,6 +7,8 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -49,7 +51,6 @@ public class AddInstrumentActivity extends AppCompatActivity {
     private static final int REQUEST_PERMISSION_CAMARA = 1;
     Intent cameraIntent;
     List<Instrument> instruments;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,6 +157,7 @@ public class AddInstrumentActivity extends AppCompatActivity {
                 .addBodyParameter("model", modelEditText.getText().toString())
                 .addBodyParameter("serialNumber", serialNumberEditText.getText().toString())
                 .addBodyParameter("picture", "")
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -182,6 +184,7 @@ public class AddInstrumentActivity extends AppCompatActivity {
                 .addBodyParameter("model", modelEditText.getText().toString())
                 .addBodyParameter("serialNumber", serialNumberEditText.getText().toString())
                 .addBodyParameter("picture", "")
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -194,7 +197,7 @@ public class AddInstrumentActivity extends AppCompatActivity {
                     }
                     @Override
                     public void onError(ANError error) {
-                        Toast.makeText(getApplicationContext(), R.string.error_publication_save, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), R.string.error_instrument_save, Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -202,6 +205,7 @@ public class AddInstrumentActivity extends AppCompatActivity {
     private void deleteInstrument() {
         AndroidNetworking.delete(MuContactApiService.INSTRUMET_EDIT_URL)
                 .addPathParameter("instrument_id", MuContactApp.getInstance().getCurrentInstrument().getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()

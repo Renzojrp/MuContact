@@ -2,6 +2,8 @@ package pe.com.mucontact.activities;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -117,6 +119,10 @@ public class AddPublicationActivity extends AppCompatActivity {
     }
 
     public void layoutByOrigin() {
+        if(MuContactApp.getInstance().getCurrentInstruments().size() == 0) {
+            Toast.makeText(getApplicationContext(), R.string.error_no_instruments_found, Toast.LENGTH_SHORT).show();
+            finish();
+        }
         if(MuContactApp.getInstance().getCurrentPublication() != null) {
             descriptionEditText.setText(MuContactApp.getInstance().getCurrentPublication().getDescription());
             locationAtEditText.setText(MuContactApp.getInstance().getCurrentPublication().getLocationAt());
@@ -173,6 +179,7 @@ public class AddPublicationActivity extends AppCompatActivity {
                 .addBodyParameter("description", descriptionEditText.getText().toString())
                 .addBodyParameter("locationAt", locationAtEditText.getText().toString())
                 .addBodyParameter("deliveryDay", dateEditText.getText().toString())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -197,6 +204,7 @@ public class AddPublicationActivity extends AppCompatActivity {
                 .addBodyParameter("locationAt", locationAtEditText.getText().toString())
                 .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().getId())
                 .addBodyParameter("deliveryDay", dateEditText.getText().toString())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -216,6 +224,7 @@ public class AddPublicationActivity extends AppCompatActivity {
     private void deletePublication() {
         AndroidNetworking.delete(MuContactApiService.PUBLICATION_EDIT_URL)
                 .addPathParameter("publication_id", MuContactApp.getInstance().getCurrentPublication().getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -237,9 +246,11 @@ public class AddPublicationActivity extends AppCompatActivity {
         AndroidNetworking.post(MuContactApiService.ORDER_URL)
                 .addBodyParameter("craftman", MuContactApp.getInstance().getCurrentCraftman().getId())
                 .addBodyParameter("instrument", idInstrumentSelected)
+                .addBodyParameter("musician", musician.getId())
                 .addBodyParameter("description", descriptionEditText.getText().toString())
                 .addBodyParameter("locationAt", locationAtEditText.getText().toString())
                 .addBodyParameter("deliveryDay", dateEditText.getText().toString())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()

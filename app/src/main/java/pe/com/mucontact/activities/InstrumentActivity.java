@@ -60,7 +60,6 @@ public class InstrumentActivity extends AppCompatActivity {
 
         updateInstruments();
     }
-
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -72,6 +71,7 @@ public class InstrumentActivity extends AppCompatActivity {
         AndroidNetworking
                 .get(MuContactApiService.INSTRUMET_MUSICIAN_URL)
                 .addPathParameter("musician_id", musician.getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()

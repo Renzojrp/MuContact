@@ -2,11 +2,14 @@ package pe.com.mucontact.activities;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -19,6 +22,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.adapters.RewardsAdapter;
 import pe.com.mucontact.models.Reward;
@@ -63,6 +67,7 @@ public class RewardActivity extends AppCompatActivity {
     private void updateRewards() {
         AndroidNetworking
                 .get(MuContactApiService.REWARD_URL)
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.LOW)
                 .build()
@@ -85,4 +90,5 @@ public class RewardActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

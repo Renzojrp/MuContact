@@ -5,6 +5,7 @@ import java.util.List;
 import pe.com.mucontact.models.Craftman;
 import pe.com.mucontact.models.Instrument;
 import pe.com.mucontact.models.Musician;
+import pe.com.mucontact.models.Order;
 import pe.com.mucontact.models.Publication;
 import pe.com.mucontact.models.Reward;
 import pe.com.mucontact.models.User;
@@ -20,6 +21,7 @@ public class MuContactApiService {
     public static String PUBLICATION_USER_URL = "https://mucontact.herokuapp.com/api/publication/musician/{musician_id}";
     public static String PUBLICATION_URL = "https://mucontact.herokuapp.com/api/publication";
     public static String PUBLICATION_EDIT_URL = "https://mucontact.herokuapp.com/api/publication/{publication_id}";
+    public static String ORDER_USER_URL = "https://mucontact.herokuapp.com/api/order/musician/{musician_id}";
     public static String USERS_EDIT_URL = "https://mucontact.herokuapp.com/api/user/{user_id}";
     public static String REWARD_URL = "https://mucontact.herokuapp.com/api/reward";
     public static String CRAFTMAN_URL = "https://mucontact.herokuapp.com/api/craftman";
@@ -32,6 +34,7 @@ public class MuContactApiService {
     private String currentToken;
     private Musician currentMusician;
     private Publication currentPublication;
+    private Order currentOrder;
     private Reward currentReward;
     private Craftman currentCraftman;
     private Instrument currentInstrument;
@@ -70,6 +73,15 @@ public class MuContactApiService {
 
     public MuContactApiService setCurrentPublication(Publication currentPublication){
         this.currentPublication = currentPublication;
+        return this;
+    }
+
+    public Order getCurrentOrder() {
+        return currentOrder;
+    }
+
+    public MuContactApiService setCurrentOrder(Order currentOrder){
+        this.currentOrder = currentOrder;
         return this;
     }
 

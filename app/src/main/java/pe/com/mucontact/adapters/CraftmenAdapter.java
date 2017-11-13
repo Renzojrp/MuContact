@@ -1,5 +1,6 @@
 package pe.com.mucontact.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
@@ -38,7 +39,7 @@ public class CraftmenAdapter extends RecyclerView.Adapter<CraftmenAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(
-            CraftmenAdapter.ViewHolder holder, int  position) {
+            CraftmenAdapter.ViewHolder holder, @SuppressLint("RecyclerView") final int  position) {
         holder.nameTextView.setText(craftmen.get(position).getUser().getDisplayName());
         holder.descriptionTextView.setText(craftmen.get(position).getDescription());
         holder.photoANImageView.setErrorImageResId(R.mipmap.ic_launcher);

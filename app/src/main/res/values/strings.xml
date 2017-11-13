@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name" translatable="false">MuContact</string>
+    <string name="app_name">MuContact</string>
 
     <!-- LoginActivity -->
     <string name="signUpTextView"><u>No account yet? Create one</u></string>
@@ -8,20 +8,19 @@
     <string name="incorrect_login">User or password incorrect</string>
 
     <!-- RegisterActivity -->
+    <string name="title_activity_register">Register</string>
     <string name="signInTextView"><u>Already a member? Login</u></string>
     <string name="user_saved">User saved</string>
     <string name="error_user_saved">Failed to save user</string>
 
     <!-- HomeActivity -->
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
     <string name="title_orders">Orders</string>
     <string name="title_publications">Publications</string>
     <string name="title_contracts">Contracts</string>
-
-    <!-- EditUserProfileActivity -->
-    <string name="profile_update">Profile updated!</string>
-    <string name="error_profile_update">Failed to update profile</string>
-    <string name="empty_fild">Fill empty field</string>
 
     <!-- PublicationFragment -->
     <string name="instrument">Instrument</string>
@@ -29,11 +28,9 @@
     <string name="locationReference">Location at</string>
     <string name="description_hint">Description</string>
 
-    <!-- PublicationActivity -->
-    <string name="publication_save">Publication save</string>
-    <string name="error_publication_save">Failed to save publication</string>
-    <string name="publication_delete">Publication delete</string>
-    <string name="error_publication_delete">Failed to delete publication</string>
+    <!-- EditUserProfileActivity -->
+    <string name="profile_update">Profile updated!</string>
+    <string name="error_profile_update">Failed to update profile</string>
 
     <!-- InstrumentActivity -->
     <string name="instrument_save">Instrument save</string>
@@ -41,13 +38,29 @@
     <string name="instrument_delete">Instrument delete</string>
     <string name="error_instrument_delete">Failed to delete instrument</string>
 
+    <!-- PublicationActivity -->
+    <string name="publication_save">Publication save</string>
+    <string name="error_publication_save">Failed to save publication</string>
+    <string name="publication_delete">Publication delete</string>
+    <string name="error_publication_delete">Failed to delete publication</string>
+    <string name="error_no_instruments_found">There are no registered instruments</string>
+
     <!-- OrderActivity -->
     <string name="order_save">Order save</string>
     <string name="error_order_save">Failed to save order</string>
     <string name="order_delete">Order delete</string>
     <string name="error_order_delete">Failed to delete order</string>
 
-    <!-- hint -->
+    <!-- Button -->
+    <string name="signInButton">Login</string>
+    <string name="signUpButton">Create account</string>
+    <string name="exchangeButton">Exchange</string>
+    <string name="deliveryDayButton">Delivery day</string>
+    <string name="sendOrderButton">Send Order</string>
+    <string name="cancelButton">Cancel</string>
+    <string name="acceptButton">Accept</string>
+
+    <!-- Hint -->
     <string name="email_hint">Email</string>
     <string name="password_hint">Password</string>
     <string name="first_name_hint">First name</string>
@@ -56,30 +69,24 @@
     <string name="model_hint">Model</string>
     <string name="brand_hint">Brand</string>
     <string name="serialNumber_hint">Serial number</string>
-
-    <!-- button -->
-    <string name="loginButton">Login</string>
-    <string name="signUpButton">Create account</string>
-    <string name="exchangeButton">Exchange</string>
-    <string name="deliveryDayButton">Delivery day</string>
-    <string name="sendOrderButton">Send Order</string>
-    <string name="cancelButton">Cancel</string>
-    <string name="acceptButton">Accept</string>
+    <string name="mucontactimage">MuContactImage</string>
 
     <!-- inavaid -->
     <string name="invalid_email">Invalid email</string>
     <string name="invalid_password">Invalid password</string>
     <string name="invalid_displayName">Invalid first name</string>
-    <string name="title_activity_register">RegisterActivity</string>
+    <string name="empty_fild">Fill empty field</string>
 
-    <string name="title_rewards">Rewards</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Menu -->
     <string name="action_settings">Settings</string>
     <string name="action_profile">Profile</string>
     <string name="action_edit">Edit</string>
     <string name="action_delete">Delete</string>
-    <string name="title_activity_about_user">AboutUserActivity</string>
-    <string name="title_activity_reward">RewardActivity</string>
-    <string name="title_activity_about_reward">AboutRewardActivity</string>
+    <string name="title_rewards">Rewards</string>
+    <string name="title_activity_about_musician">Profile</string>
 
     <!-- samples -->
     <string name="sample_name" translatable="false">Sample Name</string>
@@ -91,10 +98,13 @@
     <string name="sample_level" translatable="false">Sample level</string>
     <string name="sample_description" translatable="false">Sample description</string>
     <string name="sample_category" translatable="false">Sample category</string>
-    <string name="title_activity_edit_user_profile">EditUserProfileActivity</string>
-    <string name="title_activity_add_publication">AddPublicationActivity</string>
-    <string name="title_activity_instrument">InstrumentActivity</string>
-    <string name="title_activity_add_instrument">AddInstrumentActivity</string>
-    <string name="title_activity_about_craftman">AboutCraftmanActivity</string>
+    <string name="title_activity_reward">Rewards</string>
+    <string name="title_activity_instrument">Instruments</string>
+    <string name="title_activity_edit_musician_profile">Edit Profile</string>
+    <string name="title_activity_about_reward">About Reward</string>
+    <string name="title_activity_add_instrument">Add Instrument</string>
+    <string name="title_activity_add_publication">Add Publication</string>
+    <string name="title_activity_craftman">Craftmen</string>
+    <string name="title_activity_about_craftman">About Craftman</string>
 
 </resources>

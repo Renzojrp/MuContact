@@ -1,6 +1,8 @@
 package pe.com.mucontact.activities;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -19,7 +21,7 @@ import pe.com.mucontact.R;
 import pe.com.mucontact.models.User;
 import pe.com.mucontact.network.MuContactApiService;
 
-public class EditUserProfileActivity extends AppCompatActivity {
+public class EditMusicianProfileActivity extends AppCompatActivity {
     private EditText displayNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
@@ -29,7 +31,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_user_profile);
+        setContentView(R.layout.activity_edit_musician_profile);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -51,6 +53,7 @@ public class EditUserProfileActivity extends AppCompatActivity {
                 .addBodyParameter("displayName", displayNameEditText.getText().toString())
                 .addBodyParameter("password", passwordEditText.getText().toString())
                 .addPathParameter("user_id", user.getId())
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()

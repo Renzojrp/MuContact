@@ -2,6 +2,8 @@ package pe.com.mucontact.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,7 +19,7 @@ import pe.com.mucontact.R;
 import pe.com.mucontact.models.Musician;
 import pe.com.mucontact.models.User;
 
-public class AboutUserActivity extends AppCompatActivity {
+public class AboutMusicianActivity extends AppCompatActivity {
     private ANImageView photoANImageView;
     private TextView displayNameTextView;
     private TextView emailTextView;
@@ -32,16 +34,13 @@ public class AboutUserActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_about_user);
+        setContentView(R.layout.activity_about_musician);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         userInformation();
-
-    }
-
-    public boolean onCreateOptionsMenu(Menu menu) {
+    }public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_profile_sources, menu);
         return super.onCreateOptionsMenu(menu);
@@ -53,7 +52,7 @@ public class AboutUserActivity extends AppCompatActivity {
             case R.id.action_profile:
                 return true;
             case R.id.action_edit_profile:
-                startActivity(new Intent(getApplicationContext(), EditUserProfileActivity.class));
+                startActivity(new Intent(getApplicationContext(), EditMusicianProfileActivity.class));
             default:
                 return super.onContextItemSelected(item);
         }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="pe.com.mucontact.activities.EditUserProfileActivity">
+    tools:context="pe.com.mucontact.activities.CraftmanActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -20,6 +20,10 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_edit_user_profile" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/craftmanRecyclerView"
+        android:layout_marginTop="53dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </android.support.design.widget.CoordinatorLayout>

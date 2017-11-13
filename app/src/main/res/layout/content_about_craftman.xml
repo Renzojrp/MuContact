@@ -8,6 +8,7 @@
     tools:context="pe.com.mucontact.activities.AboutCraftmanActivity"
     tools:showIn="@layout/activity_about_craftman">
 
+
     <com.androidnetworking.widget.ANImageView
         android:id="@+id/photoCraftmanANImageView"
         android:layout_width="wrap_content"

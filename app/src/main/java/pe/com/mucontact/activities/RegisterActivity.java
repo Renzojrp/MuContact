@@ -3,6 +3,8 @@ package pe.com.mucontact.activities;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
@@ -20,20 +22,23 @@ import com.androidnetworking.interfaces.JSONObjectRequestListener;
 
 import org.json.JSONObject;
 
+import pe.com.mucontact.MuContactApp;
 import pe.com.mucontact.R;
 import pe.com.mucontact.network.MuContactApiService;
 
-public class RegisterActivity extends AppCompatActivity {    EditText displayNameEditText;
+public class RegisterActivity extends AppCompatActivity {
+    EditText displayNameEditText;
     EditText emailEditText;
     EditText passwordEditText;
     TextView signInTextView;
-    Button registerButton;
-    ProgressBar loginProgressBar;
-    private static String TAG = "MuContact";
+    Button signUpButton;
+    ProgressBar signUpProgressBar;
 
     boolean correctEmail = false;
     boolean correctPassword= false;
     boolean correctDisplayName = false;
+
+    private static String TAG = "MuContact";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,21 +49,21 @@ public class RegisterActivity extends AppCompatActivity {    EditText displayNam
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        displayNameEditText = (EditText) findViewById(R.id.nameTextInputEditText);
+        displayNameEditText = (EditText) findViewById(R.id.displayNameTextInputEditText);
         emailEditText = (EditText) findViewById(R.id.emailTextInputEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordInputEditText);
         signInTextView = (TextView) findViewById(R.id.signInTextView);
-        loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
-        loginProgressBar.setVisibility(View.GONE);
-        registerButton = (Button) findViewById(R.id.registerButton);
+        signUpProgressBar = (ProgressBar) findViewById(R.id.signUpProgressBar);
+        signUpButton = (Button) findViewById(R.id.signUpButton);
+        signUpProgressBar.setVisibility(View.GONE);
     }
 
-    public void registerClick(View v) {
-        loginProgressBar.setVisibility(View.VISIBLE);
+    public void signUpClick(View v) {
+        signUpProgressBar.setVisibility(View.VISIBLE);
         if(!Patterns.EMAIL_ADDRESS.matcher(emailEditText.getText().toString()).matches()){
             emailEditText.setError(getResources().getString(R.string.invalid_email));
             correctEmail = false;
-            loginProgressBar.setVisibility(View.INVISIBLE);
+            signUpProgressBar.setVisibility(View.INVISIBLE);
         } else {
             emailEditText.setError(null);
             correctEmail = true;
@@ -67,7 +72,7 @@ public class RegisterActivity extends AppCompatActivity {    EditText displayNam
         if(displayNameEditText.getText().toString().length() == 0){
             displayNameEditText.setError(getResources().getString(R.string.invalid_displayName));
             correctDisplayName = false;
-            loginProgressBar.setVisibility(View.INVISIBLE);
+            signUpProgressBar.setVisibility(View.INVISIBLE);
         } else {
             displayNameEditText.setError(null);
             correctDisplayName = true;
@@ -76,22 +81,23 @@ public class RegisterActivity extends AppCompatActivity {    EditText displayNam
         if(passwordEditText.getText().toString().length() == 0) {
             passwordEditText.setError(getResources().getString(R.string.invalid_password));
             correctPassword = false;
-            loginProgressBar.setVisibility(View.INVISIBLE);
+            signUpProgressBar.setVisibility(View.INVISIBLE);
         } else {
             passwordEditText.setError(null);
             correctPassword = true;
         }
         if(correctEmail && correctPassword && correctDisplayName) {
-            registerUser();
+            signUpUser();
         }
     }
 
-    private void registerUser() {
+    private void signUpUser() {
         AndroidNetworking.post(MuContactApiService.SIGNUP_URL)
                 .addBodyParameter("email", emailEditText.getText().toString())
                 .addBodyParameter("displayName", displayNameEditText.getText().toString())
                 .addBodyParameter("password",passwordEditText.getText().toString())
                 .addBodyParameter("userType", "Musician")
+                .addHeaders("Authorization", MuContactApp.getInstance().getCurrentToken())
                 .setTag(TAG)
                 .setPriority(Priority.MEDIUM)
                 .build()
@@ -99,21 +105,21 @@ public class RegisterActivity extends AppCompatActivity {    EditText displayNam
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(getApplicationContext(), R.string.user_saved, Toast.LENGTH_SHORT).show();
-                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        signUpProgressBar.setVisibility(View.INVISIBLE);
                         finish();
                     }
                     @Override
                     public void onError(ANError error) {
                         Toast.makeText(getApplicationContext(), R.string.error_user_saved, Toast.LENGTH_SHORT).show();
-                        loginProgressBar.setVisibility(View.INVISIBLE);
+                        signUpProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
 
     public void goToLoginActivity(View v) {
-        loginProgressBar.setVisibility(View.VISIBLE);
         v.getContext()
                 .startActivity(new Intent(v.getContext(),
                         LoginActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
+
 }
